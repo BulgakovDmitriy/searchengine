@@ -34,7 +34,6 @@ public class Lemma implements Serializable {
     @OneToMany(mappedBy = "lemma", cascade = CascadeType.ALL)
     private List<IndexSearch> index = new ArrayList<>();
 
-
     public Lemma(String lemma, int frequency, SitePage sitePageId) {
         this.lemma = lemma;
         this.frequency = frequency;

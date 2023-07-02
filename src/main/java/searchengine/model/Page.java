@@ -1,17 +1,21 @@
 package searchengine.model;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
 import jakarta.persistence.*;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name = "page", indexes = {@Index(name = "path_list", columnList = "path")})
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Page {
 
@@ -23,7 +27,6 @@ public class Page {
     private SitePage siteId;
     @Column(length = 1000, columnDefinition = "VARCHAR(515)", nullable = false)
     private String path;
-
 
     @Column (nullable = false)
     private int code;

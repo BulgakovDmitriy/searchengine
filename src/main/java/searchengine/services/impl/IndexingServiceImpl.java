@@ -2,6 +2,8 @@ package searchengine.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import searchengine.configuration.Site;
 import searchengine.repository.SiteRepository;
@@ -19,6 +21,8 @@ import searchengine.parsers.SiteIndexed;
 import searchengine.repository.IndexSearchRepository;
 import searchengine.repository.LemmaRepository;
 import searchengine.repository.PageRepository;
+import searchengine.statisticsDto.BadRequest;
+import searchengine.statisticsDto.Response;
 
 @Service
 @RequiredArgsConstructor
@@ -39,8 +43,6 @@ public class IndexingServiceImpl implements IndexingService {
         if (urlCheck(url)) {
 
             executorService = Executors.newFixedThreadPool(processorCoreCount);
-
-
             log.info("Start reindexing site - " + url);
             executorService.submit(new SiteIndexed(pageRepository, siteRepository, lemmaRepository, indexSearchRepository, lemmaParser, indexParser, url, sitesList));
             executorService.shutdown();
@@ -102,5 +104,22 @@ public class IndexingServiceImpl implements IndexingService {
             }
         }
         return false;
+    }
+
+    @Override
+    public ResponseEntity<Object> indexSite(String url) {
+        if (url.isEmpty()) {
+            log.info("Page not set");
+            return new ResponseEntity<>(new BadRequest(false, "Page not set"), HttpStatus.BAD_REQUEST);
+        } else {
+            if (urlIndexing(url) == true) {
+                log.info("Page - " + url + " - added for reindexing");
+                return new ResponseEntity<>(new Response(true), HttpStatus.OK);
+            } else {
+                log.info("There is no such a page in configuration file");
+                return new ResponseEntity<>(new BadRequest(false, "There is no such a page in configuration file"),
+                        HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 }

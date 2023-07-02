@@ -14,8 +14,6 @@ import searchengine.statisticsDto.SearchResults;
 import lombok.extern.slf4j.Slf4j;
 
 
-
-
 @RestController
 @RequestMapping("/api")
 @Slf4j
@@ -23,9 +21,7 @@ public class SearchController {
 
 
     private final SearchService searchService;
-
     private final SiteRepository siteRepository;
-
 
     public SearchController(SearchService searchService, SiteRepository siteRepository) {
         this.searchService = searchService;
@@ -35,45 +31,13 @@ public class SearchController {
     @GetMapping("/search")
     @Operation(summary = "Search")
     public ResponseEntity<Object> search(@RequestParam(name = "query", required = false, defaultValue = "") String query,
-                                    @RequestParam(name = "site", required = false, defaultValue = "") String site,
-                                    @RequestParam(name = "offset", defaultValue = "0") int offset,
-                                    @RequestParam(name = "limit", defaultValue = "20") int limit) {
+                                         @RequestParam(name = "site", required = false, defaultValue = "") String site,
+                                         @RequestParam(name = "offset", defaultValue = "0") int offset,
+                                         @RequestParam(name = "limit", defaultValue = "20") int limit) {
 
+        ResponseEntity<Object> response = searchService.search(query, site, offset, limit);
 
+        return response;
 
-        SearchResults searchResults;
-
-
-        if (query.isEmpty()) {
-
-
-
-            return new ResponseEntity<>(new BadRequest(false, "Empty request"), HttpStatus.BAD_REQUEST);
-
-        } else {
-            if (!site.isEmpty()) {
-                if (siteRepository.findByUrl(site) == null) {
-
-                    return new ResponseEntity<>(new BadRequest(false, "Required page not found"), HttpStatus.BAD_REQUEST);
-
-
-                } else {
-
-                    searchResults = searchService.siteSearch(query, site, offset, limit);
-
-
-
-
-                }
-
-
-            } else {
-
-                searchResults = searchService.allSiteSearch(query, offset, limit);
-
-            }
-
-            return new ResponseEntity<>(searchResults, HttpStatus.OK);
-        }
     }
 }

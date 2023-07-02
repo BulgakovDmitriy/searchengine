@@ -14,5 +14,4 @@ public class ApiErrorController {
                 .body(new ErrMessage("Search info is not in database"
                         + exception.getMessage()));
     }
-
 }

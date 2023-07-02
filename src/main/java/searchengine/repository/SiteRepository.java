@@ -6,7 +6,4 @@ import searchengine.model.SitePage;
 @Repository
 public interface SiteRepository extends JpaRepository<SitePage, Long> {
     SitePage findByUrl(String url);
-
-
-
 }

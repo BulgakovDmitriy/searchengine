@@ -13,7 +13,6 @@ public interface LemmaRepository extends JpaRepository<Lemma, Long> {
 
   List<Lemma> findBySitePageId(SitePage siteId);
 
-
   List<Lemma> findByLemma(String lemma);
 
   List<Lemma> findByLemmaAndSitePageId(String lemma, SitePage site);

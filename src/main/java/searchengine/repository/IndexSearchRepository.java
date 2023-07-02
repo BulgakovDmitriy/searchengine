@@ -10,7 +10,6 @@ public interface IndexSearchRepository extends JpaRepository<IndexSearch, Long> 
 
 
     List<IndexSearch> findByLemmaId (long lemmaId);
-
     List<IndexSearch> findByPageId (long pageId);
     IndexSearch findByLemmaIdAndPageId (long lemmaId, long pageId);
 

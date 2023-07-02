@@ -22,13 +22,10 @@ public class IndexController {
     private final IndexingService indexingService;
 
 
-
     public IndexController(StatisticsService statisticsService, IndexingService indexingService) {
 
         this.statisticsService = statisticsService;
         this.indexingService = indexingService;
-
-
     }
 
     @GetMapping("/statistics")
@@ -59,24 +56,13 @@ public class IndexController {
         }
     }
 
-
     @PostMapping("/indexPage")
 
     @Operation(summary = "Certain page indexing")
     public ResponseEntity<Object> indexPage(@RequestParam(name = "url") String url) {
-        if (url.isEmpty()) {
-            log.info("Page not set");
-            return new ResponseEntity<>(new BadRequest(false, "Page not set"), HttpStatus.BAD_REQUEST);
-        } else {
-            if (indexingService.urlIndexing(url) == true) {
-                log.info("Page - " + url + " - added for reindexing");
-                return new ResponseEntity<>(new Response(true), HttpStatus.OK);
-            } else {
-                log.info("There is no such a page in configuration file");
-                return new ResponseEntity<>(new BadRequest(false, "There is no such a page in configuration file"),
-                        HttpStatus.BAD_REQUEST);
-            }
-        }
+
+        ResponseEntity <Object> response = indexingService.indexSite(url);
+        return response;
     }
 }
 
