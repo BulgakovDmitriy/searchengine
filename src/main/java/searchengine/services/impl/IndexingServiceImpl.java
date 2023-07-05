@@ -38,6 +38,7 @@ public class IndexingServiceImpl implements IndexingService {
     private final IndexParser indexParser;
     private final SitesList sitesList;
 
+
     @Override
     public boolean urlIndexing(String url) {
         if (urlCheck(url)) {
@@ -82,6 +83,27 @@ public class IndexingServiceImpl implements IndexingService {
         } else {
             log.info("Indexing was not stopped because it was not started");
             return false;
+        }
+    }
+
+    @Override
+    public ResponseEntity<Object> indexingStop(boolean stopIndexing) {
+        if (stopIndexing()) {
+            return new ResponseEntity<>(new Response(true), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new BadRequest(false,
+                    "Indexing was not stopped because it was not started"), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<Object> indexAllSites(boolean indexingAll) {
+        if (indexingAll) {
+            return new ResponseEntity<>(new Response(true), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new BadRequest(false, "Indexing not started"),
+                    HttpStatus.BAD_REQUEST);
         }
     }
 

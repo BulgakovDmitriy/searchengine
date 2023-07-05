@@ -3,7 +3,6 @@ package searchengine.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import searchengine.services.StatisticsService;
 import searchengine.statisticsDto.*;
@@ -37,23 +36,19 @@ public class IndexController {
     @GetMapping("/startIndexing")
     @Operation(summary = "Site indexing")
     public ResponseEntity<Object> startIndexing() {
-        if (indexingService.indexingAll()) {
-            return new ResponseEntity<>(new Response(true), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new BadRequest(false, "Indexing not started"),
-                    HttpStatus.BAD_REQUEST);
-        }
+
+        ResponseEntity <Object> response = indexingService.indexAllSites(indexingService.indexingAll());
+
+        return response;
     }
 
     @GetMapping("/stopIndexing")
     @Operation(summary = "Stop indexing")
     public ResponseEntity<Object> stopIndexing() {
-        if (indexingService.stopIndexing()) {
-            return new ResponseEntity<>(new Response(true), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new BadRequest(false,
-                    "Indexing was not stopped because it was not started"), HttpStatus.BAD_REQUEST);
-        }
+
+        ResponseEntity <Object> response = indexingService.indexingStop(indexingService.stopIndexing());
+
+        return response;
     }
 
     @PostMapping("/indexPage")

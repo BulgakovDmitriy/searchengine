@@ -7,5 +7,9 @@ public interface IndexingService {
     boolean indexingAll();
     boolean stopIndexing();
 
+    ResponseEntity<Object> indexingStop(boolean stopIndexing);
+
+    ResponseEntity<Object> indexAllSites(boolean indexingAll);
+
     ResponseEntity<Object> indexSite (String url);
 }
