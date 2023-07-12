@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "indexing-settings",
+      "type": "searchengine.configuration.SitesList",
+      "sourceType": "searchengine.configuration.SitesList"
+    }
+  ],
+  "properties": [
+    {
+      "name": "indexing-settings.sites",
+      "type": "java.util.List<searchengine.configuration.Site>",
+      "sourceType": "searchengine.configuration.SitesList"
+    }
+  ],
+  "hints": []
+}

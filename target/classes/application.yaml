@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: root
+    password: testtest
+    url: jdbc:mysql://localhost:3306/search_engine?useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+indexing-settings:
+  sites:
+
+    - url: https://dombulgakova.ru
+      name: Домъ Булгакова
+    - url: https://www.playback.ru
+      name: PlayBack.Ru
+
+
+
+
+
+
+connection-settings:
+  userAgent: Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6
+  referer: https://www.google.com
